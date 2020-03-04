@@ -1,0 +1,222 @@
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Document</title>
+    <style>
+        .nysci {
+            color:#666666;
+        }
+        .nysci-grey-bg {
+            background-color:#E9E9E9;
+        }
+        .nysci-yellow-bg {
+            background-color:#FFF7E1;
+        }
+
+        .nysci-offyellow {
+            background-color: #FFC606;
+        }
+
+    </style>
+</head>
+<body>
+
+    
+    <div class="container-fluid text-center py-3">
+        <h1 class="font-weight-bold text-dark py-1"> Today's date is {{todays_date}}</h1>
+        <h1>{{error}}</h1>
+    </div>
+
+    <div class="jumbotron-fluid bg-danger my-0">
+        <div class="container text-center py-3">
+            <h1 class="text-white">Weekdays</h1>
+        </div>
+    </div>
+
+    <div class="container-fluid nysci-yellow-bg">
+        <br>
+        <h1 class='text-dark text-center'>Total Numbers: <span class="text-danger">{{total}}</span></h1> 
+        <h1 class='text-dark text-center' >Grade Range: <span class="text-danger">{{groups}}</span></h1>
+        <div class="row py-3">
+            <div class="col-2 text-center ">
+                <!--
+                    <h3>Activity List</h3>
+                    <ul class="list-group">
+                        {% if activities_list == 0 %}
+                            <li class="list-group-item">Add an activity to display here!</li>
+                        {% else %}
+                            {% for activity in activities_list %}
+                                <li class="list-group-item">{{activity}} <br> Grade Range: {{activity.grade_range}}</li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                -->
+                <div class="dropdown sticky-top">
+                    <button class="btn btn-secondary dropdown-toggle btn-danger" type="button" id="dropdownMenuButton" data-toggle ="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Runnable Activities
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <ul class="list-group">
+                            {% if activities_list == 0 %}
+                                <li class="list-group-item">Add an activity to display here!</li>
+                            {% else %}
+                                {% for activity in activities_list %}
+                                    <li class="list-group-item"><span class="font-weight-bold">{{activity}}</span> <br> Grade Range: 
+                                        {{activity.grade_range}}</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 text-center mx-auto border border-danger rounded">
+                <h4>What activities did you run today?</h4>
+                <form method='post' action="{% url 'index' %}">
+                    {% csrf_token %}
+                    {{activity_form| crispy}}
+                    <br>
+                    <input type="submit" placeholder="Submit">
+                </form>
+            </div>
+
+            <div class="col-4 text-center mx-auto">
+                <h4>Weekday Notes</h4>
+                <ul class="list-group">
+                    
+                    {% if weekday_notes == 0 %}
+                        <li class="list-group-item">No notes for the weekdays!</li>
+                    {% else %}
+                        {% for notes in weekday_notes %}
+                            {% if notes.priority > 4 %}
+                                <li class="list-group-item list-group-item-danger">{{notes}}</li>
+                            {% elif notes.priority > 2 %}
+                                <li class="list-group-item list-group-item-warning">{{notes}}</li>
+                            {% else %}
+                                <li class="list-group-item list-group-item-info">{{notes}}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid nysci-yellow-bg py-2">
+        <div class="row">
+            <div class="col-2 text-center border border-danger mx-auto rounded">
+                <h5>Monday</h5>
+                <h6>{{activities.Monday.0}}</h6>
+                <h6>{{activities.Monday.1}}</h6>
+                <h6>{{activities.Monday.2}}</h6>
+                <h6>{{activities.Monday.3}}</h6>
+            </div>
+                
+            <div class="col-2 text-center border border-danger mx-auto rounded">
+                <h5>Tuesday</h5>
+                <h6>{{activities.Tuesday.0}}</h6>
+                <h6>{{activities.Tuesday.1}}</h6>
+                <h6>{{activities.Tuesday.2}}</h6>
+                <h6>{{activities.Tuesday.3}}</h6>
+            </div>
+            
+            <div class="col-2 text-center border border-danger mx-auto rounded">
+                <h5>Wednesday</h5>
+                <h6>{{activities.Wednesday.0}}</h6>
+                <h6>{{activities.Wednesday.1}}</h6>
+                <h6>{{activities.Wednesday.2}}</h6>
+                <h6>{{activities.Wednesday.3}}</h6>
+            </div>
+                
+            <div class="col-2 text-center border border-danger mx-auto rounded">
+                <h5>Thursday</h5>
+                <h6>{{activities.Thursday.0}}</h6>
+                <h6>{{activities.Thursday.1}}</h6>
+                <h6>{{activities.Thursday.2}}</h6>
+                <h6>{{activities.Thursday.3}}</h6>
+            </div>
+        
+            <div class="col-2 text-center border border-danger mx-auto rounded">
+                <h5>Friday</h5>
+                <h6>{{activities.Friday.0}}</h6>
+                <h6>{{activities.Friday.1}}</h6>
+                <h6>{{activities.Friday.2}}</h6>
+                <h6>{{activities.Friday.3}}</h6>
+            </div>  
+        </div>
+        
+    </div>
+        
+    <div class="jumbotron-fluid bg-danger">
+        <div class="container text-center py-3">
+            <h1 class="text-white">Weekends!</h1>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center nysci-yellow-bg">
+        <div class="row py-4">
+            <div class="col-4 mx-auto">
+                {% if weekend_activities == 0 %}
+                    <h2>You haven't chosen or saved any activities to run during the weekend!</h2>
+                {% else %}
+                    <div class="row">
+                        <div class="col-3">
+                            <h2> Sandbox: </h2>
+                        </div>
+
+                        <div class="col-9">
+                            <h2 class="text-right text-danger">{{weekend_activities.Sandbox.name}}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h2> Backstage: </h2>
+                        </div>
+
+                        <div class="col-9">
+                            <h2 class="text-right text-danger"> {{weekend_activities.Backstage.name}} </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h2> Treehouse: </h2>
+                        </div>
+
+                        <div class="col-9">
+                            <h2 class="text-right text-danger"> {{weekend_activities.Treehouse.name}} </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h2> Studio: </h2>
+                        </div>
+
+                        <div class="col-9">
+                            <h2 class="text-right text-danger"> {{weekend_activities.Studio.name}}</h2>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-4 mx-auto">
+                <h1>Weekend Notes</h1>
+                <ul class="list-group">
+                    {% for notes in weekend_notes %}
+                        <li class="list-group-item">{{notes}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</body>
+</html>
