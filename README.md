@@ -18,9 +18,4 @@ The technologies used in this website are Django, Gmail and Google Sheets API.</
 <h3> Google Sheets API </h3>
 <p> The google sheets API is used to create and save a spreadsheet containing all the data for that month. </p>
 
-<h3> Curious how it works? </h3>
-<p> Clone the repository <br>
-  pip install requirements.txt <br>
-  python manage.py runserver <br>
-  go to localhost:8000 to view the website!
 
