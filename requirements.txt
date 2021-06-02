@@ -42,7 +42,7 @@ six==1.13.0
 sqlparse==0.3.0
 tablib==0.14.0
 uritemplate==3.0.1
-urllib3==1.25.7
+urllib3==1.26.5
 virtualenv==16.7.9
 wrapt==1.11.2
 xlrd==1.2.0
